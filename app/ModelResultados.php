@@ -8,6 +8,12 @@ use Exception;
 
 class ModelResultados extends Model
 {
+    protected $table = "artigos";
+
+    protected $fillable = [
+        'id', 'id_usuario', 'nome_veiculo', 'link', 'ano', 'combustivel', 'portas', 'quilometragem', 'cambio', 'cor'
+    ];
+
     public static $connect;
     
     public static function connectDbArtigos() {

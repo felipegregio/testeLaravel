@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class InicioController extends Controller
 {
-    public function telaInicio()
+    public function index()
     {
         return view('telaInicio');
     }
@@ -42,59 +42,58 @@ class InicioController extends Controller
 
             $cars = array();
             foreach ($dom->getElementsByTagName('article') as $article) {
-            if ($article->getAttribute('class') == 'card clearfix') {
-                $cars['id'] = $article->getAttribute('id');
-                //$cars['img'] = $article->getElementsByTagName('img')->item(0)->getAttribute('src');
-                $cars['title'] = $article->getElementsByTagName('h2')->item(0)->nodeValue;
-                $cars['link'] = $article->getElementsByTagName('a')->item(0)->getAttribute('href');
+                if ($article->getAttribute('class') == 'card clearfix') {
+                    $cars['id'] = $article->getAttribute('id');
+                    //$cars['img'] = $article->getElementsByTagName('img')->item(0)->getAttribute('src');
+                    $cars['title'] = $article->getElementsByTagName('h2')->item(0)->nodeValue;
+                    $cars['link'] = $article->getElementsByTagName('a')->item(0)->getAttribute('href');
 
-                $cars['details'] = array();
-                foreach ($article->getElementsByTagName('ul')->item(0)->getElementsByTagName('li') as $detail) {
-                $key = $detail->getElementsByTagName('span')->item(0)->nodeValue;
-                $value = $detail->getElementsByTagName('span')->item(1)->nodeValue;
+                    $cars['details'] = array();
+                    foreach ($article->getElementsByTagName('ul')->item(0)->getElementsByTagName('li') as $detail) {
+                    $key = $detail->getElementsByTagName('span')->item(0)->nodeValue;
+                    $value = $detail->getElementsByTagName('span')->item(1)->nodeValue;
 
-                $key = trim($key);
-                $value = trim($value);
-                $cars['details'][$key] = $value;
+                    $key = trim($key);
+                    $value = trim($value);
+                    $cars['details'][$key] = $value;
+                    }
                 }
             }
+            
+            //dd($cars);
 
-            if ($result === "") {
-              throw new \Exception("Erro ao consultar " . $urlPesquisa);
+                if ($result === "") {
+                    throw new \Exception("Erro ao consultar " . $urlPesquisa);
+                }
+            
+            if ($cars === ""){
+                echo "<script>alert('Nenhum veículo encontrado!')</script>";
+            } else{
+                    
+                $conn = ModelInicio::connectDbArtigos();
+
+                $stmt = $conn->prepare("INSERT INTO artigos (id_usuario, nome_veiculo, link, ano, combustivel, portas, quilometragem, cambio, cor) VALUES (?,?,?,?,?,?,?,?,?)");
+                
+                $stmt -> bindParam(1, $cars["id"]);
+                $stmt -> bindParam(2, $cars["title"]);
+                $stmt -> bindParam(3, $cars["link"]);
+                $stmt -> bindParam(4, $cars["details"]["Ano:"]);
+                $stmt -> bindParam(5, $cars["details"]["Combustível:"]);
+                $stmt -> bindParam(6, $cars["details"]["Portas:"]);
+                $stmt -> bindParam(7, $cars["details"]["Quilometragem:"]);
+                $stmt -> bindParam(8, $cars["details"]["Câmbio:"]);
+                $stmt -> bindParam(9, $cars["details"]["Cor:"]);
+                $stmt -> execute();	
+                
+                unset($dom);
             }
-
-        try{
-            $conn = ModelInicio::connectDbArtigos();
-
-            $stmt = $conn->prepare("INSERT INTO artigos (id_usuario, nome_veiculo, link, ano, combustivel, portas, quilometragem, cambio, cor) VALUES (?,?,?,?,?,?,?,?,?)");
-            
-            $stmt -> bindParam(1, $cars["id"]);
-            $stmt -> bindParam(2, $cars["title"]);
-            $stmt -> bindParam(3, $cars["link"]);
-            $stmt -> bindParam(4, $cars["details"]["Ano:"]);
-            $stmt -> bindParam(5, $cars["details"]["Combustível:"]);
-            $stmt -> bindParam(6, $cars["details"]["Portas:"]);
-            $stmt -> bindParam(7, $cars["details"]["Quilometragem:"]);
-            $stmt -> bindParam(8, $cars["details"]["Câmbio:"]);
-            $stmt -> bindParam(9, $cars["details"]["Cor:"]);
-            $stmt -> execute();	
-            
-            unset($dom);
 
             return view('sucesso');
 
-
-        } catch (Exception $e){
-            die('Erro: Erro ao acessar base de dados de artigos. Caso o problema persista, entre em contato o administrador adm@empresa.com');
-
-            return back()->with('error', 'Problema ao inserir dados para a base de dados');
-        }
-
-        } 
-    }  
+    } 
     
     public function telaResultados()
     {
         return view('resultados');
     }
-}
+}  

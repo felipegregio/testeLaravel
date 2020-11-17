@@ -30,15 +30,16 @@
                         </div>
                         @endif
 
-                        <!--@#if(count($errors > 0))
+                        @if(count($errors > 0))
                             <div class="alert alert-danger">
                                 <ul>
-                                @#foreach($errors->all() as $error)
-                                <li>{#{ $error }}</li>
-                                @#endforeach
+                                @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
                                 </ul>
                             </div>
-                        @#endif-->
+                        @endif
+                        
                         <form method="POST" action="{{ action('LoginController@checaLogin')}}" style="margin: 100px auto auto auto; text-align: center;">
                             {{ csrf_field() }}
                             <h2>Acesso a aplicação</h2><br>

@@ -20,9 +20,44 @@
     </div>
 @endif
 
-<h1>Lista de artigos</h1>
+<h1 class="col-3">Lista de artigos</h1><br>
 
-{{ App\Http\Controllers\ResultadosController::retornaResultado() }}
+<div class="col-8">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Código carro</th>
+                <th>Nome Veículo</th>
+                <th>Link</th>
+                <th>Ano</th>
+                <th>Combustível</th>
+                <th>Portas</th>
+                <th>Quilometragem</th>
+                <th>Câmbio</th>
+                <th>Cor</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($resultados as $resultado)
+            <tr>
+                <td>{{$resultado->id}}</td>
+                <td>{{$resultado->id_usuario}}</td>
+                <td>{{$resultado->nome_veiculo}}</td>
+            <td><a href={{$resultado->link}}>{{$resultado->link}}</a></td>
+                <td>{{$resultado->ano}}</td>
+                <td>{{$resultado->combustivel}}</td>
+                <td>{{$resultado->portas}}</td>
+                <td>{{$resultado->quilometragem}}</td>
+                <td>{{$resultado->cambio}}</td>
+                <td>{{$resultado->cor}}</td>
+            <td><button class='btn btn-danger'>Deletar</button></td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html>

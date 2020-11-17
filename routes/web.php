@@ -13,15 +13,14 @@
 
 Route::get('/', 'LoginController@telaLogin');
 
-Route::get('resultados', 'ResultadosController@telaResultado');
-Route::post('resultados', 'ResultadosController@retornaResultado');
+Route::get('resultados', 'ResultadosController@index');
 Route::post('login/checaLogin', 'LoginController@checaLogin');
 Route::post('resultados/sucesso', 'InicioController@pesquisa');
 Route::get('login/sucessoLogin', 'LoginController@sucessoLogin');
 Route::resource('sucesso', 'ControllerSucesso@telaSucesso');
 //Route::get('login/logout', 'LoginController@logout');
 
-Route::get('inicio', 'InicioController@telaInicio');
+Route::get('inicio', 'InicioController@index');
 
 Auth::routes();
 

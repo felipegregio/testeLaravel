@@ -20,7 +20,11 @@ class CreateUsersTable extends Migration
         });
     }
 
+    /*
+Schema::create('artigos', function (Blueprint $table) {
+            
     /**
+     * /*
      * Reverse the migrations.
      *
      * @return void
