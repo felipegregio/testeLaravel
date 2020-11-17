@@ -12,14 +12,14 @@ class LoginController extends Controller
     public function telaLogin()
     {
     
-/*    //Maneira que fiz para inserir login e senha (tentei a senha de forma criptografada 
-*    //com Hash::make() mas não logava... Então deixei sem)
-*
-*       $user = new User();
-*       $user->usuario = 'admin';
-*       $user->password = 'admin';
-*       $user->save(); 
-*/
+    //Maneira que fiz para inserir login e senha (tentei a senha de forma criptografada 
+   //com Hash::make() mas não logava... Então deixei sem)
+
+      $user = new User();
+      $user->usuario = 'admin';
+      $user->password = 'admin';
+      $user->save(); 
+
         $user = User::where('id', '=', 1)->first();
         return view('telaLogin', [
             'user' => $user

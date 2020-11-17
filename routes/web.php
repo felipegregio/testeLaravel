@@ -22,6 +22,8 @@ Route::resource('sucesso', 'ControllerSucesso@telaSucesso');
 
 Route::get('inicio', 'InicioController@index');
 
+Route::post('resultados/delete','ResultadosController@deleteArtigo');
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');

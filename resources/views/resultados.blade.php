@@ -21,6 +21,7 @@
 @endif
 
 <h1 class="col-3">Lista de artigos</h1><br>
+<p class="col-5"><a href="{{ url('/') }}">Sair</a></p>
 
 <div class="col-8">
     <table class="table">
@@ -52,7 +53,9 @@
                 <td>{{$resultado->quilometragem}}</td>
                 <td>{{$resultado->cambio}}</td>
                 <td>{{$resultado->cor}}</td>
-            <td><button class='btn btn-danger'>Deletar</button></td>
+            <td><form method="POST" action="{{ action('ResultadosController@deleteArtigo') }}">@csrf
+            <button value="{{$resultado->id}}">"Deletar artigo"</button>
+            </form></td>
             </tr>
             @endforeach
         </tbody>

@@ -24,12 +24,15 @@ class ResultadosController extends Controller
         ]);
     }
     
-    function deleteArtigo($id)
+    public function deleteArtigo(Request $id)
     {
-        
-        $conn = ModelResultados::connectDbArtigos();
-        
-        $sql = "DELETE FROM artigos WHERE id='$id'";
-        $resultado_sql = $conn->query($sql)->fetch();
+        $artigo = $this->objResultado->find($id);
+
+        $delete = $artigo->delete();
+
+        if($delete)
+            return redirect()->route['resultados'];
+        else
+            return redirect()->route['resultados'];
     }
 }

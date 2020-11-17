@@ -25,7 +25,7 @@
             <a href="{{ url('/') }}" style="float: right">Sair</a>            
         </div>
         @else
-            <script>window.location = "/login";</script>
+            <script>window.location = "/";</script>
         @endif
         <br>
         @if ($message = Session::get('error'))
